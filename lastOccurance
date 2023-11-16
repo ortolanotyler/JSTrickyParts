@@ -1,0 +1,56 @@
+function findFirst(arr, number) {
+    let low = 0;
+    let high = arr.length - 1;
+    let firstOccurrence = -1;
+
+    while (low <= high) {
+        let mid = Math.floor((low + high) / 2);
+        if (arr[mid] === number) {
+            firstOccurrence = mid;
+            high = mid - 1; // Keep searching to the left.
+        } else if (arr[mid] < number) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    return firstOccurrence;
+}
+
+function findLast(arr, number) {
+    let low = 0;
+    let high = arr.length - 1;
+    let lastOccurrence = -1;
+
+    while (low <= high) {
+        let mid = Math.floor((low + high) / 2);
+        if (arr[mid] === number) {
+            lastOccurrence = mid;
+            low = mid + 1; // Keep searching to the right.
+        } else if (arr[mid] < number) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    return lastOccurrence;
+}
+
+function sortedFrequency(arr, number) {
+    const firstIndex = findFirst(arr, number);
+    const lastIndex = findLast(arr, number);
+
+    if (firstIndex === -1 || lastIndex === -1) {
+        return -1; // The number doesn't exist in the array.
+    }
+
+    return lastIndex - firstIndex + 1;
+}
+
+// Example usage:
+console.log(sortedFrequency([1, 1, 2, 2, 2, 2, 3], 2)); // Should return 4
+console.log(sortedFrequency([1, 1, 2, 2, 2, 2, 3], 3)); // Should return 1
+console.log(sortedFrequency([1, 1, 2, 2, 2, 2, 3], 1)); // Should return 2
+console.log(sortedFrequency([1, 1, 2, 2, 2, 2, 3], 4)); // Should return -1 (not found)
