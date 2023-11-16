@@ -1,0 +1,33 @@
+function findRotationCount(arr) {
+    let low = 0;
+    let high = arr.length - 1;
+
+    while (low <= high) {
+        // If the array is already sorted, no rotation is done
+        if (arr[low] <= arr[high]) {
+            return low;
+        }
+
+        let mid = Math.floor((low + high) / 2);
+        let next = (mid + 1) % arr.length;
+        let prev = (mid - 1 + arr.length) % arr.length;
+
+        // Check if the mid element is the pivot (smallest element)
+        if (arr[mid] <= arr[next] && arr[mid] <= arr[prev]) {
+            return mid;
+        }
+
+        // Decide which half to continue the search in
+        if (arr[mid] <= arr[high]) {
+            high = mid - 1;
+        } else if (arr[mid] >= arr[low]) {
+            low = mid + 1;
+        }
+    }
+
+    return 0; // In case the array is not rotated
+}
+
+// Example usage
+console.log(findRotationCount([15, 18, 2, 3, 6, 12])); // Should return 2
+console.log(findRotationCount([7, 9, 11,
